@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 @EnableFeignClients
 @EnableCaching
-public class StaticDataServiceApplication {
+public class PoiServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StaticDataServiceApplication.class, args);
+		SpringApplication.run(PoiServiceApplication.class, args);
 	}
 }

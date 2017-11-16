@@ -18,23 +18,6 @@ public final String CONTEXT = "poi";
 	
 	@RequestMapping(value = CONTEXT + "/{vin}/", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<GpsResponse>> getPOIsAround(@PathVariable String vin, @RequestParam Float longitude, @RequestParam Float latitude, @RequestParam Boolean cached);
+	public ResponseEntity<List<GpsResponse>> getPOIsAround(@PathVariable("vin") String vin, @RequestParam("longitude") Float longitude, @RequestParam("latitude") Float latitude, @RequestParam("cached") Boolean cached);
 
-	/*
-	@RequestMapping(value = CONTEXT + "/echo", method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseEntity<String> echo();
-	
-	@RequestMapping(value = CONTEXT + "/{vin}/", method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseEntity<DataResponse> getAllDataForVin(@PathVariable("vin") String vin);
-	
-	@RequestMapping(value = CONTEXT + "/{vin}/{attribute}/", method = RequestMethod.GET)
-	@ResponseBody
-	public ResponseEntity<DataResponse> getAttributeForVin(@PathVariable("vin") String vin, @PathVariable("attribute") String attribute);
-
-	@RequestMapping(value = CONTEXT + "/", method = RequestMethod.DELETE)
-	@ResponseBody
-	public ResponseEntity<Boolean> evictCache();
-	*/
 }
