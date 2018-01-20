@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: poi-service
+  cloud:
+    config:
+      discovery:
+        enabled: true
+management.security.enabled: false
+
+stores:
+  ribbon:
+    listOfServers: ryandel.selfhost.me
+    
+ribbon:
+  eureka:
+    enabled: false
