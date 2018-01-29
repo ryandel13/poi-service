@@ -34,7 +34,7 @@ public class MockRepositoryLocalPOI implements POIRepository {
 		List<GpsResponse> out = new ArrayList<GpsResponse>();
 		if(callback) {
 			Thread t = new Thread(new CallbackRunner(vin, latitude, longitude, cached));
-			t.run();
+			t.start();
 		} else {
 			ResponseEntity<List<GpsResponse>> feignIn = feignClient.getPOIsAround(vin, longitude, latitude, cached, false);
 			out = feignIn.getBody();
