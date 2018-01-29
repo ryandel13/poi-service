@@ -33,8 +33,8 @@ public class MockRepositoryLocalPOI implements POIRepository {
 	public List<GpsResponse> getPOIaround(String vin, Float latitude, Float longitude, Boolean cached, Boolean callback) {
 		List<GpsResponse> out = new ArrayList<GpsResponse>();
 		if(callback) {
-			CallbackRunner runner = new CallbackRunner(vin, latitude, longitude, cached);
-			runner.run();
+			Thread t = new Thread(new CallbackRunner(vin, latitude, longitude, cached));
+			t.run();
 		} else {
 			ResponseEntity<List<GpsResponse>> feignIn = feignClient.getPOIsAround(vin, longitude, latitude, cached, false);
 			out = feignIn.getBody();
@@ -70,7 +70,12 @@ public class MockRepositoryLocalPOI implements POIRepository {
 		public void run() {
 			ResponseEntity<List<GpsResponse>> feignIn = feignClient.getPOIsAround(vin, longitude, latitude, cached, false);
 			for(GpsResponse gpsResp : feignIn.getBody()) {
-				Thread.sleep(2000);
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				responseForwarder("localhost", 8000, gpsResp);
 			}
 		}
