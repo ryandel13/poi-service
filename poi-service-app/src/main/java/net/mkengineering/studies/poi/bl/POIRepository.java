@@ -6,6 +6,6 @@ import net.mkengineering.studies.poi.GpsResponse;
 
 public interface POIRepository {
 
-	public List<GpsResponse> getPOIaround(String vin, Float latitude, Float longitude, Boolean cached);
+	public List<GpsResponse> getPOIaround(String vin, Float latitude, Float longitude, Boolean cached, Boolean callback);
 
 }

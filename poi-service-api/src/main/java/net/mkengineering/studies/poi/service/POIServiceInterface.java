@@ -18,6 +18,11 @@ public final String CONTEXT = "poi";
 	
 	@RequestMapping(value = CONTEXT + "/{vin}/", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<GpsResponse>> getPOIsAround(@PathVariable("vin") String vin, @RequestParam("longitude") Float longitude, @RequestParam("latitude") Float latitude, @RequestParam("cached") Boolean cached);
+	public ResponseEntity<List<GpsResponse>> getPOIsAround(
+			@PathVariable("vin") String vin, 
+			@RequestParam("longitude") Float longitude, 
+			@RequestParam("latitude") Float latitude, 
+			@RequestParam("cached") Boolean cached, 
+			@RequestParam("callback") Boolean callback);
 
 }

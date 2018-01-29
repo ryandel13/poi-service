@@ -55,11 +55,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-feign</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>void.rino.spring.cache</groupId>
 			<artifactId>spring-cache-request</artifactId>
 			<version>1.0-SNAPSHOT</version>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 
 	<build>

@@ -18,9 +18,9 @@ public class POIServiceImpl implements POIServiceInterface {
 	private POIRepository sdsRepo;
 
 	@Override
-	public ResponseEntity<List<GpsResponse>> getPOIsAround(@PathVariable String vin, Float longitude, Float latitude, Boolean cached) {
+	public ResponseEntity<List<GpsResponse>> getPOIsAround(@PathVariable String vin, Float longitude, Float latitude, Boolean cached, Boolean callback) {
 		// TODO Auto-generated method stub
-		return new ResponseEntity<List<GpsResponse>>(sdsRepo.getPOIaround(vin, latitude, longitude, cached), HttpStatus.OK);
+		return new ResponseEntity<List<GpsResponse>>(sdsRepo.getPOIaround(vin, latitude, longitude, cached, callback), HttpStatus.OK);
 	}
 	
 }

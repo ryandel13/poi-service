@@ -17,7 +17,7 @@ public class MockRepository implements POIRepository{
 	GpsResponse poi3 = new GpsResponse(220f, 10f, "remote", "Remote2", "...");
 	
 	@Override
-	public List<GpsResponse> getPOIaround(String vin, Float latitude, Float longitude, Boolean cached) {
+	public List<GpsResponse> getPOIaround(String vin, Float latitude, Float longitude, Boolean cached, Boolean callback) {
 		List<GpsResponse> out = new ArrayList<>();
 		out.add(poi1);
 		out.add(poi2);

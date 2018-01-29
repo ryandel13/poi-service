@@ -12,7 +12,7 @@ import net.mkengineering.studies.poi.GpsResponse;
 public class MockRepositoryDefault implements POIRepository{
 
 	@Override
-	public List<GpsResponse> getPOIaround(String vin, Float latitude, Float longitude, Boolean cached) {
+	public List<GpsResponse> getPOIaround(String vin, Float latitude, Float longitude, Boolean cached, Boolean callback) {
 		// TODO Auto-generated method stub
 		return null;
 	}
