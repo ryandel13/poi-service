@@ -48,7 +48,7 @@ public class MockRepositoryLocalPOI implements POIRepository {
 	}
 	
 	private class CallbackRunner implements Runnable {
-
+		
 		private String vin;
 		
 		private Float longitude;
@@ -71,7 +71,7 @@ public class MockRepositoryLocalPOI implements POIRepository {
 			ResponseEntity<List<GpsResponse>> feignIn = feignClient.getPOIsAround(vin, longitude, latitude, cached, false);
 			for(GpsResponse gpsResp : feignIn.getBody()) {
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(2000); //To have a visible effect.
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -86,6 +86,7 @@ public class MockRepositoryLocalPOI implements POIRepository {
 				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 				connection.setRequestMethod("PUT");
 				connection.setDoOutput(true);
+				connection.setReadTimeout(5000); //Timeout to keep connection during bad period
 				System.out.println(url.toString());
 				connection.setRequestProperty("Content-Type", "application/json");
 				connection.setRequestProperty("Accept", "application/json");
