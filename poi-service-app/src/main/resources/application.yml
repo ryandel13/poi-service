@@ -7,6 +7,10 @@ spring:
         enabled: true
 management.security.enabled: false
 
+eureka:
+ instance:
+  hostname: epsilon
+
 stores:
   ribbon:
     listOfServers: ryandel.selfhost.me

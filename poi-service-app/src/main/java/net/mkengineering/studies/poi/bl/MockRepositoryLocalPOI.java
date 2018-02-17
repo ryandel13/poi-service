@@ -31,6 +31,7 @@ public class MockRepositoryLocalPOI implements POIRepository {
 	
 	@Override
 	public List<GpsResponse> getPOIaround(String vin, Float latitude, Float longitude, Boolean cached, Boolean callback) {
+		System.out.println("Processing POI for vin " + vin);
 		List<GpsResponse> out = new ArrayList<GpsResponse>();
 		if(callback) {
 			Thread t = new Thread(new CallbackRunner(vin, latitude, longitude, cached));
@@ -68,15 +69,33 @@ public class MockRepositoryLocalPOI implements POIRepository {
 		
 		@Override
 		public void run() {
-			ResponseEntity<List<GpsResponse>> feignIn = feignClient.getPOIsAround(vin, longitude, latitude, cached, false);
-			for(GpsResponse gpsResp : feignIn.getBody()) {
+			//Poor retry mechanism
+			ResponseEntity<List<GpsResponse>> feignIn = null;
+			for(int i = 0; i<20; i++) {
 				try {
-					Thread.sleep(2000); //To have a visible effect.
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					feignIn = feignClient.getPOIsAround(vin, longitude, latitude, cached, false);
+				} catch (Exception e) {
+					System.out.println("Attempt failed");
+					//Retry...
 				}
-				responseForwarder("localhost", 8000, gpsResp);
+				if(feignIn != null) break;
+				else { 
+					try {
+						Thread.sleep(3000); //Retry after 3s.
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			if(feignIn != null) {
+				for(GpsResponse gpsResp : feignIn.getBody()) {
+					try {
+						Thread.sleep(2000); //To have a visible effect.
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					responseForwarder("localhost", 8000, gpsResp);
+				}
 			}
 		}
 		
