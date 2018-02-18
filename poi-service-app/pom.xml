@@ -55,6 +55,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-feign</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>net.mkengineering.studies.ui</groupId>
+			<artifactId>ui-service-api</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
 		<!--<dependency>
 			<groupId>void.rino.spring.cache</groupId>
 			<artifactId>spring-cache-request</artifactId>

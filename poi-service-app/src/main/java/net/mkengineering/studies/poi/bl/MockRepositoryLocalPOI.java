@@ -13,9 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import net.mkengineering.studies.poi.GpsResponse;
 import net.mkengineering.studies.poi.remote.POIFeign;
+import net.mkengineering.studies.poi.remote.UIFeign;
 
 @Component
 @ConditionalOnProperty(name="repository.location", havingValue="memory")
@@ -28,6 +30,9 @@ public class MockRepositoryLocalPOI implements POIRepository {
 	
 	@Autowired
 	private POIFeign feignClient;
+	
+	@Autowired
+	private UIFeign uiFeign;
 	
 	@Override
 	public List<GpsResponse> getPOIaround(String vin, Float latitude, Float longitude, Boolean cached, Boolean callback) {
@@ -101,26 +106,12 @@ public class MockRepositoryLocalPOI implements POIRepository {
 		
 		private void responseForwarder(String inurl, int port, GpsResponse respo) {
 			try {
-				URL url = new URL("http://" + inurl + ":" + port + "/RESTInterface/gps");
-				HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-				connection.setRequestMethod("PUT");
-				connection.setDoOutput(true);
-				connection.setReadTimeout(5000); //Timeout to keep connection during bad period
-				System.out.println(url.toString());
-				connection.setRequestProperty("Content-Type", "application/json");
-				connection.setRequestProperty("Accept", "application/json");
-				OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-
-				String output = oM.writeValueAsString(respo);
-
-				osw.write(output);
-				osw.flush();
-				osw.close();
-				connection.disconnect();
-				System.out.println(output);
-				System.err.println(connection.getResponseCode());
+				ObjectNode output = oM.convertValue(respo, ObjectNode.class);
+				uiFeign.pushGps(output);
+				
 			} catch (Exception ex) {
 				System.out.println("Error occured");
+				ex.printStackTrace();
 			}
 		}
 		
